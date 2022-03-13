@@ -1,0 +1,75 @@
+ALTER TABLE Student RENAME COLUMN NAME TO FIRST_NAME;
+
+
+set SQL_SAFE_UPDATES=0;   /*if delete option says unsafe, then set SQL_SAFE_UPDATES=0*/ 
+DELETE FROM empdetail WHERE EID=2;
+SET SQL_SAFE_UPDATES=1;
+
+
+
+List of  DCL commands: 
+
+GRANT: This command gives users access privileges to the database.
+REVOKE: This command withdraws the user’s access privileges given by using the GRANT command.
+TCL:
+COMMIT: Commits a Transaction.
+ROLLBACK: Rollbacks a transaction in case of any error occurs.
+SAVEPOINT:Sets a savepoint within a transaction.
+SET TRANSACTION: Specify characteristics for the transaction.
+ 
+SELECT COUNT (*) FROM Information
+
+ SELECT * FROM Information WHERE lastname = 'Williams';
+
+UPDATE Information SET dob = '1999-02-02' WHERE lastname = Wills;
+
+
+CREATE TABLE shop (
+    article INT UNSIGNED  DEFAULT '0000' NOT NULL,
+    dealer  CHAR(20)      DEFAULT ''     NOT NULL,
+    price   DECIMAL(16,2) DEFAULT '0.00' NOT NULL,
+    PRIMARY KEY(article, dealer));
+INSERT INTO shop VALUES
+    (1,'A',3.45),(1,'B',3.99),(2,'A',10.99),(3,'B',1.45),
+    (3,'C',1.69),(3,'D',1.25),(4,'D',19.95);
+
+
+SELECT MAX(article) AS article FROM shop;
+
+
+ Find the number, dealer, and price of the most expensive article.
+
+This is easily done with a subquery:
+
+
+SELECT article, dealer, price
+FROM   shop
+WHERE  price=(SELECT MAX(price) FROM shop);
+
+
+or
+
+SELECT article, dealer, price
+FROM shop
+ORDER BY price DESC
+LIMIT 1;
+
+
+or
+
+
+SELECT s1.article, s1.dealer, s1.price
+FROM shop s1
+LEFT JOIN shop s2 ON s1.price < s2.price
+WHERE s2.article IS NULL;
+
+
+ Find the highest price per article.
+
+
+SELECT article, MAX(price) AS price
+FROM   shop
+GROUP BY article
+ORDER BY article;
+
+
